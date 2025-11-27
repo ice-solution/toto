@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ShoppingBag, Menu, X } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
@@ -15,24 +15,15 @@ const NAV_LINKS = [
 ];
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { cart, toggleCart } = useShop();
   const location = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}`}>
+    <nav className="fixed w-full z-50 bg-white shadow-sm py-4 transition-all duration-300">
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="text-2xl font-serif tracking-widest font-bold z-50 mix-blend-difference text-black">
+        <Link to="/" className="text-2xl font-serif tracking-widest font-bold z-50 text-black">
           杜乾彰<span className="text-xs block font-sans font-normal tracking-[0.3em]">MASTER DU</span>
         </Link>
 
@@ -42,7 +33,7 @@ const Navbar = () => {
             <Link 
               key={link.path}
               to={link.path} 
-              className={`text-xs xl:text-sm tracking-widest uppercase hover:text-accent transition-colors ${location.pathname === link.path ? 'border-b border-black' : ''}`}
+              className={`text-xs xl:text-sm tracking-widest uppercase text-black hover:text-accent transition-colors ${location.pathname === link.path ? 'border-b border-black' : ''}`}
             >
               {link.label}
             </Link>
@@ -52,7 +43,7 @@ const Navbar = () => {
         {/* Icons */}
         <div className="flex items-center space-x-6 z-50">
           <button onClick={toggleCart} className="relative group">
-            <ShoppingBag className="w-5 h-5" />
+            <ShoppingBag className="w-5 h-5 text-black" />
             {cart.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-black text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
                 {cart.length}
@@ -61,7 +52,7 @@ const Navbar = () => {
           </button>
           
           <button className="lg:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? <X className="w-6 h-6 text-black" /> : <Menu className="w-6 h-6 text-black" />}
           </button>
         </div>
       </div>

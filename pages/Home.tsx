@@ -29,7 +29,7 @@ const Home = () => {
             </p>
             <div className="flex flex-col md:flex-row gap-6 justify-center">
               <Link to="/membership">
-                <Button variant="primary" className="bg-white !text-black font-bold hover:bg-gray-200 tracking-widest">
+                <Button variant="primary" className="bg-white !text-black font-bold hover:bg-gray-800 hover:!text-white tracking-widest">
                   探索會員制度
                 </Button>
               </Link>
