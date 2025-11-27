@@ -16,8 +16,7 @@ const Home = () => {
           playsInline
           className="absolute top-0 left-0 w-full h-full object-cover opacity-80 grayscale-[30%]"
         >
-          {/* Placeholder video that looks ethereal/nature/calm */}
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-ink-swirling-in-water-314-large.mp4" type="video/mp4" />
+          <source src="/banner.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
           <div className="text-center text-white p-6 max-w-4xl">
@@ -30,7 +29,7 @@ const Home = () => {
             </p>
             <div className="flex flex-col md:flex-row gap-6 justify-center">
               <Link to="/membership">
-                <Button variant="primary" className="bg-white text-black font-bold hover:bg-gray-200 tracking-widest">
+                <Button variant="primary" className="bg-white !text-black font-bold hover:bg-gray-200 tracking-widest">
                   探索會員制度
                 </Button>
               </Link>

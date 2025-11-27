@@ -14,7 +14,7 @@ export const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { 
   };
 
   return (
-    <button className={`${baseStyles} ${variants[variant]} ${className}`} {...props}>
+    <button className={`${baseStyles} ${variants[variant]} ${className}`.trim()} {...props}>
       {children}
     </button>
   );
