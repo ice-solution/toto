@@ -3,7 +3,10 @@
 # ============================================
 # 前端開發服務器端口（只填數字，不要包含 http://）
 VITE_FRONTEND_PORT=3001
+
 # 前端開發服務器主機（只填主機名或 IP，不要包含協議或端口）
+# 開發環境建議：0.0.0.0 (允許從其他設備訪問) 或 localhost (僅本地訪問)
+# 生產環境：不需要（因為使用 Apache 服務）
 # 例如：0.0.0.0 或 localhost
 VITE_FRONTEND_HOST=0.0.0.0
 
@@ -12,9 +15,18 @@ VITE_FRONTEND_HOST=0.0.0.0
 # ============================================
 # 後端 API 服務器端口（只填數字）
 API_PORT=3002
-# 後端 API 服務器主機（只填主機名，如 localhost，不要包含 http:// 或端口）
+
+# 後端 API 服務器主機（只填主機名，不要包含 http:// 或端口）
+# ⚠️ 重要：應該設置為 localhost（不是 domain）
+# - 生產環境：localhost（後端只通過 Apache proxy 訪問，不需要外部訪問）
+# - 開發環境：localhost 或 0.0.0.0（0.0.0.0 允許從其他設備訪問）
+# 因為 Apache proxy 會將 /api 請求轉發到 localhost:3002
 API_HOST=localhost
+
 # 後端 API 完整 URL（包含協議和端口，用於前端連接）
+# 開發環境：http://localhost:3002
+# 生產環境：通常不需要設置（前端使用相對路徑 /api，通過 Apache proxy）
+# 如果需要設置，應該是：https://your-domain.com（但通常留空即可）
 API_BASE_URL=http://localhost:3002
 
 # ============================================
@@ -27,4 +39,3 @@ ADMIN_PASSWORD=admin123
 # Gemini API Key
 # ============================================
 GEMINI_API_KEY=your_gemini_api_key_here
-

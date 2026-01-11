@@ -33,7 +33,7 @@ const getBlogFilePath = (filename) => {
 };
 
 // 讀取 Blog 文章
-app.get('/api/blog', async (req, res) => {
+app.get('/blog', async (req, res) => {
   try {
     const filePath = getBlogFilePath('blog.json');
     const data = await fs.readFile(filePath, 'utf-8');
@@ -45,7 +45,7 @@ app.get('/api/blog', async (req, res) => {
 });
 
 // 保存 Blog 文章
-app.post('/api/blog', async (req, res) => {
+app.post('/blog', async (req, res) => {
   try {
     const posts = req.body;
     const filePath = getBlogFilePath('blog.json');
@@ -58,7 +58,7 @@ app.post('/api/blog', async (req, res) => {
 });
 
 // 讀取 Categories
-app.get('/api/blog/categories', async (req, res) => {
+app.get('/blog/categories', async (req, res) => {
   try {
     const filePath = getBlogFilePath('blogCategories.json');
     const data = await fs.readFile(filePath, 'utf-8');
@@ -70,7 +70,7 @@ app.get('/api/blog/categories', async (req, res) => {
 });
 
 // 保存 Categories
-app.post('/api/blog/categories', async (req, res) => {
+app.post('/blog/categories', async (req, res) => {
   try {
     const categories = req.body;
     const filePath = getBlogFilePath('blogCategories.json');
@@ -83,7 +83,7 @@ app.post('/api/blog/categories', async (req, res) => {
 });
 
 // 讀取 Tags
-app.get('/api/blog/tags', async (req, res) => {
+app.get('/blog/tags', async (req, res) => {
   try {
     const filePath = getBlogFilePath('blogTags.json');
     const data = await fs.readFile(filePath, 'utf-8');
@@ -95,7 +95,7 @@ app.get('/api/blog/tags', async (req, res) => {
 });
 
 // 保存 Tags
-app.post('/api/blog/tags', async (req, res) => {
+app.post('/blog/tags', async (req, res) => {
   try {
     const tags = req.body;
     const filePath = getBlogFilePath('blogTags.json');
@@ -108,7 +108,7 @@ app.post('/api/blog/tags', async (req, res) => {
 });
 
 // 讀取 Services
-app.get('/api/services', async (req, res) => {
+app.get('/services', async (req, res) => {
   try {
     const filePath = getBlogFilePath('services.json');
     const data = await fs.readFile(filePath, 'utf-8');
@@ -120,7 +120,7 @@ app.get('/api/services', async (req, res) => {
 });
 
 // 保存 Services
-app.post('/api/services', async (req, res) => {
+app.post('/services', async (req, res) => {
   try {
     const services = req.body;
     const filePath = getBlogFilePath('services.json');
@@ -133,7 +133,7 @@ app.post('/api/services', async (req, res) => {
 });
 
 // 讀取 Courses
-app.get('/api/courses', async (req, res) => {
+app.get('/courses', async (req, res) => {
   try {
     const filePath = getBlogFilePath('courses.json');
     const data = await fs.readFile(filePath, 'utf-8');
@@ -145,7 +145,7 @@ app.get('/api/courses', async (req, res) => {
 });
 
 // 保存 Courses
-app.post('/api/courses', async (req, res) => {
+app.post('/courses', async (req, res) => {
   try {
     const courses = req.body;
     const filePath = getBlogFilePath('courses.json');
@@ -158,7 +158,7 @@ app.post('/api/courses', async (req, res) => {
 });
 
 // Memberships 路由
-app.get('/api/memberships', async (req, res) => {
+app.get('/memberships', async (req, res) => {
   try {
     const filePath = getFilePath('memberships.json');
     const data = await fs.readFile(filePath, 'utf-8');
@@ -174,7 +174,7 @@ app.get('/api/memberships', async (req, res) => {
   }
 });
 
-app.post('/api/memberships', async (req, res) => {
+app.post('/memberships', async (req, res) => {
   try {
     const memberships = req.body;
     const filePath = getFilePath('memberships.json');

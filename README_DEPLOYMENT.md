@@ -234,6 +234,8 @@ sudo ufw allow 22/tcp  # SSH
 ```bash
 # Backend API Configuration
 API_PORT=3002
+# ⚠️ 重要：API_HOST 應該設置為 localhost（不是 domain）
+# 因為後端只通過 Apache proxy 訪問（localhost:3002），不需要外部訪問
 API_HOST=localhost
 
 # Admin Login Credentials
@@ -247,7 +249,17 @@ GEMINI_API_KEY=your_gemini_api_key_here
 # 或者可以設置為完整 URL：VITE_API_BASE_URL=https://toto.brandactivation.hk
 ```
 
-**重要**：生產環境中，前端會通過 Apache proxy 訪問 API（`/api`），所以通常不需要設置 `VITE_API_BASE_URL`。
+**重要說明**：
+
+1. **API_HOST 應該設置為 `localhost`**（不是 domain）：
+   - 後端 API 服務器只監聽本地（localhost:3002）
+   - Apache proxy 會將 `/api` 請求轉發到 `http://localhost:3002/api`
+   - 這樣更安全，後端不直接暴露到互聯網
+   - 如果設置為 domain 或 0.0.0.0，後端會監聽所有網絡接口，可能帶來安全風險
+
+2. **生產環境中，前端會通過 Apache proxy 訪問 API**（`/api`），所以通常不需要設置 `VITE_API_BASE_URL`。
+
+3. **VITE_FRONTEND_HOST 在生產環境不需要**，因為使用 Apache 服務，不運行 Vite 開發服務器。
 
 ### 9. 驗證部署
 
