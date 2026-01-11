@@ -1,0 +1,182 @@
+[
+  {
+    "id": "c1",
+    "name": "六壬課程入門簡介班",
+    "price": 3888,
+    "duration": "兩天",
+    "level": "入門",
+    "description": "認識體系、十三主神明、八大神咒應用。",
+    "imageUrl": "https://picsum.photos/id/1059/400/400",
+    "instagramUrl": "https://www.instagram.com/p/DEjW1yTBJep/"
+  },
+  {
+    "id": "c2",
+    "name": "六壬符籙初階課程",
+    "price": 8600,
+    "duration": "詳見介紹",
+    "level": "初階",
+    "description": "掌握基礎手印、花字、啟蒙儀式，建立基本保護能力。",
+    "imageUrl": "https://picsum.photos/id/1060/400/400",
+    "instagramUrl": "https://www.instagram.com/p/C1SDCGShgoE/"
+  },
+  {
+    "id": "c3",
+    "name": "六壬符籙進階課程",
+    "price": 10800,
+    "duration": "詳見介紹",
+    "level": "進階",
+    "description": "學習聖杯占卜、符水製作，處理化太歲、拜四角等。",
+    "imageUrl": "https://picsum.photos/id/1061/400/400",
+    "instagramUrl": "https://www.instagram.com/p/C35ZUomhKcD/"
+  },
+  {
+    "id": "c4",
+    "name": "六壬符籙高階課程",
+    "price": 16800,
+    "duration": "詳見介紹",
+    "level": "高階",
+    "description": "具備獨當一面師傅資格，可靈活運用大部份符咒，執行治病、驅邪等法事。",
+    "imageUrl": "https://picsum.photos/id/1062/400/400",
+    "instagramUrl": "https://www.instagram.com/p/C6MTXbhBW-N/"
+  },
+  {
+    "id": "c5",
+    "name": "六壬神功課程 (總覽)",
+    "price": 0,
+    "duration": "詳見介紹",
+    "level": "總覽",
+    "description": "介紹歷史淵源、傳承（伏英舘等）、核心實踐。",
+    "imageUrl": "https://picsum.photos/id/1063/400/400",
+    "instagramUrl": "https://www.instagram.com/p/DLP8bFEBkSK/"
+  },
+  {
+    "id": "c6",
+    "name": "生命之光 - 初階",
+    "price": 3800,
+    "duration": "課程",
+    "level": "初階",
+    "description": "連接能量源頭、五個初階符號、雙手療癒技巧。",
+    "imageUrl": "https://picsum.photos/id/1064/400/400",
+    "instagramUrl": "https://www.instagram.com/p/C5V25Ieh3lR/"
+  },
+  {
+    "id": "c7",
+    "name": "生命之光 - 中階",
+    "price": 4800,
+    "duration": "課程",
+    "level": "中階",
+    "description": "學習六個中階符號、Sekhem遙距療癒方法。",
+    "imageUrl": "https://picsum.photos/id/1065/400/400",
+    "instagramUrl": ""
+  },
+  {
+    "id": "c8",
+    "name": "生命之光 - 療癒師進階",
+    "price": 5200,
+    "duration": "課程",
+    "level": "進階",
+    "description": "直接連接個案靈性中心，增強接觸能量源頭的能力。",
+    "imageUrl": "https://picsum.photos/id/1066/400/400",
+    "instagramUrl": ""
+  },
+  {
+    "id": "c9",
+    "name": "生命之光 - 大師階段",
+    "price": 13000,
+    "duration": "課程",
+    "level": "大師",
+    "description": "認識八個大師符號、深度冥想與修行。",
+    "imageUrl": "https://picsum.photos/id/1067/400/400",
+    "instagramUrl": ""
+  },
+  {
+    "id": "c10",
+    "name": "生命之光 - 導師階段",
+    "price": 12000,
+    "duration": "課程",
+    "level": "導師",
+    "description": "學習最終級別符號，可立即開課與進行能量啟動。",
+    "imageUrl": "https://picsum.photos/id/1068/400/400",
+    "instagramUrl": ""
+  },
+  {
+    "id": "c11",
+    "name": "生命數字課程（初階班）",
+    "price": 6000,
+    "duration": "四堂",
+    "level": "基礎",
+    "description": "掌握1-9數字特質、命盤計算、了解人生課題。",
+    "imageUrl": "https://picsum.photos/id/1069/400/400",
+    "instagramUrl": "https://www.instagram.com/p/C7cPIPXBjVx/"
+  },
+  {
+    "id": "c12",
+    "name": "生命數字課程（高階班）",
+    "price": 6800,
+    "duration": "五堂",
+    "level": "進階",
+    "description": "學習合併數、靈魂等級推斷、流年數字與風水化解。",
+    "imageUrl": "https://picsum.photos/id/1070/400/400",
+    "instagramUrl": "https://www.instagram.com/p/C7jT73aSD6I/"
+  },
+  {
+    "id": "c13",
+    "name": "易經塔羅課程",
+    "price": 6000,
+    "duration": "五堂",
+    "level": "中階",
+    "description": "結合易經六十四卦，掌握時間/空間卦等實戰牌陣。",
+    "imageUrl": "https://picsum.photos/id/1071/400/400",
+    "instagramUrl": "https://www.instagram.com/p/DMvKJWFBbu0/"
+  },
+  {
+    "id": "c14",
+    "name": "專業塔羅班",
+    "price": 12000,
+    "duration": "十二堂",
+    "level": "專業",
+    "description": "教授「通靈塔羅」，結合卡巴拉、生命數字、風水等多元解讀與改運技巧。",
+    "imageUrl": "https://picsum.photos/id/1072/400/400",
+    "instagramUrl": "https://www.instagram.com/p/CfLpz9Yh6q5/"
+  },
+  {
+    "id": "c15",
+    "name": "師徒塔羅班",
+    "price": 1280,
+    "duration": "每月四課",
+    "level": "師徒",
+    "description": "師徒制深度培養，內容持續更新（如魔法儀式、脈輪），需面試。",
+    "imageUrl": "https://picsum.photos/id/1073/400/400",
+    "instagramUrl": "https://www.instagram.com/p/C_SkmO-hc4W/"
+  },
+  {
+    "id": "c16",
+    "name": "亞卡西紀錄初階-「連結」",
+    "price": 6000,
+    "duration": "五堂",
+    "level": "初階",
+    "description": "開啟個人及他人阿卡西記錄、連結多維能量、靈魂家族/業力關係解讀。",
+    "imageUrl": "https://picsum.photos/id/1074/400/400",
+    "instagramUrl": "https://www.instagram.com/p/C60Nw9xh7RW/"
+  },
+  {
+    "id": "c17",
+    "name": "亞卡西紀錄高階-「療癒」",
+    "price": 6800,
+    "duration": "五堂",
+    "level": "高階",
+    "description": "赫爾墨斯七大法則應用、神聖幾何能量點化、解除靈魂契約。",
+    "imageUrl": "https://picsum.photos/id/1075/400/400",
+    "instagramUrl": "https://www.instagram.com/p/C61aVp5BFZm/"
+  },
+  {
+    "id": "c18",
+    "name": "亞卡西紀錄導師-「傳承」",
+    "price": 13333,
+    "duration": "五堂",
+    "level": "導師",
+    "description": "高維揚升、星際大師能量、深層療癒技藝、導師培訓。",
+    "imageUrl": "https://picsum.photos/id/1076/400/400",
+    "instagramUrl": "https://www.instagram.com/p/C64Xf5NBCsD/"
+  }
+]

@@ -1,19 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SectionTitle, Card, Button } from '../components/UIComponents';
-import { COURSES, calculatePoints } from '../data';
+import { calculatePoints } from '../data';
 import { useShop } from '../context/ShopContext';
 import { Clock, BookOpen, ExternalLink, Coins } from 'lucide-react';
+import { getCourses } from '../utils/coursesStorage';
+import { CourseItem } from '../types';
 
 const Courses = () => {
   const { addToCart } = useShop();
+  const [courses, setCourses] = useState<CourseItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    getCourses().then(data => {
+      setCourses(data);
+      setIsLoading(false);
+    });
+  }, []);
 
   return (
     <div className="pt-32 pb-24 animate-fade-in bg-paper">
       <div className="container mx-auto px-6">
         <SectionTitle title="靈修課程" subtitle="Spiritual Courses" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          {COURSES.map(course => (
+        {isLoading ? (
+          <div className="text-center py-16 text-gray-400">
+            <p className="text-lg mb-2">載入中...</p>
+            <p className="text-sm">正在載入課程數據</p>
+          </div>
+        ) : courses.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {courses.map(course => (
             <div key={course.id} className="bg-white flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-100 group">
               <div className="w-full md:w-2/5 h-64 md:h-auto overflow-hidden relative">
                 <img 
@@ -73,7 +90,13 @@ const Courses = () => {
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        ) : (
+          <div className="text-center py-16 text-gray-400">
+            <p className="text-lg mb-2">暫無課程</p>
+            <p className="text-sm">目前沒有可用的課程</p>
+          </div>
+        )}
       </div>
     </div>
   );

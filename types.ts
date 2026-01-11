@@ -37,6 +37,7 @@ export interface BlogPost {
   content: string;
   imageUrl: string;
   tags: string[];
+  category?: string; // 添加分類字段
 }
 
 export interface MemberTier {
@@ -62,4 +63,21 @@ export interface UserProfile {
   name: string;
   points: number;
   tier: string;
+}
+
+export type MembershipStatus = 'pending' | 'paid' | 'cancelled' | 'expired';
+
+export interface MembershipApplication {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  dob: string; // 出生日期
+  time?: string; // 出生時間（選填）
+  tier: string; // 會員等級 ID
+  status: MembershipStatus;
+  createdAt: string; // ISO 日期字符串
+  updatedAt: string; // ISO 日期字符串
+  paidAt?: string; // 付款日期（ISO 日期字符串）
+  notes?: string; // 備註
 }

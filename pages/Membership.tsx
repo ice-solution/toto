@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { SectionTitle, Button } from '../components/UIComponents';
 import { MEMBERSHIP_TIERS, TESTIMONIALS } from '../data';
 import { Check, Star, Crown, Shield, Gift, Calendar, TrendingUp, Clock } from 'lucide-react';
+import { saveMembership } from '../utils/membershipsStorage';
+import { MembershipApplication } from '../types';
 
 const Membership = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -12,15 +16,54 @@ const Membership = () => {
     time: '',
     tier: 'love'
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`感謝您的申請！我們已收到 ${formData.name} 的 ${MEMBERSHIP_TIERS.find(t => t.id === formData.tier)?.name} 申請。\n杜師傅團隊將於 24 小時內透過 WhatsApp 聯絡您確認細節。`);
+    setIsSubmitting(true);
+
+    try {
+      const selectedTier = MEMBERSHIP_TIERS.find(t => t.id === formData.tier);
+      if (!selectedTier) {
+        alert('請選擇有效的會員等級');
+        setIsSubmitting(false);
+        return;
+      }
+
+      const now = new Date().toISOString();
+      const membership: MembershipApplication = {
+        id: `membership-${Date.now()}`,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        dob: formData.dob,
+        time: formData.time || undefined,
+        tier: formData.tier,
+        status: 'pending',
+        createdAt: now,
+        updatedAt: now,
+      };
+
+      const saved = await saveMembership(membership);
+      
+      if (!saved) {
+        alert('保存會員申請失敗，請稍後再試');
+        setIsSubmitting(false);
+        return;
+      }
+      
+      // 導航到付款頁面，傳遞會員申請 ID
+      navigate(`/payment/${membership.id}`);
+    } catch (error) {
+      console.error('Error submitting membership application:', error);
+      alert('提交申請時發生錯誤，請稍後再試');
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -273,11 +316,11 @@ const Membership = () => {
             </div>
 
             <div className="pt-8">
-              <Button type="submit" className="w-full py-4 text-lg">
-                提交申請
+              <Button type="submit" className="w-full py-4 text-lg" disabled={isSubmitting}>
+                {isSubmitting ? '提交中...' : '提交申請'}
               </Button>
               <p className="text-center text-xs text-gray-400 mt-4">
-                提交後將有專人聯絡您進行付款及會籍確認。資料僅供大師建檔使用，絕對保密。
+                提交後將進入付款頁面，請選擇付款方式完成付款。資料僅供大師建檔使用，絕對保密。
               </p>
             </div>
           </form>

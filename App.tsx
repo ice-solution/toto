@@ -11,8 +11,10 @@ import Services from './pages/Services';
 import Products from './pages/Products';
 import Courses from './pages/Courses';
 import Blog from './pages/Blog';
+import BlogPostDetail from './pages/BlogPostDetail';
 import Contact from './pages/Contact';
 import Admin from './pages/Admin';
+import Payment from './pages/Payment';
 import { X, Trash2, ShoppingBag } from 'lucide-react';
 import { Button } from './components/UIComponents';
 
@@ -121,7 +123,9 @@ const App = () => {
           <Route path="/products" element={<Products />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPostDetail />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/payment/:id" element={<Payment />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
       </main>

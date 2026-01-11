@@ -33,8 +33,8 @@ export const SectionTitle: React.FC<{ title: string; subtitle?: string }> = ({ t
   </div>
 );
 
-export const Card: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
-  <div className={`bg-white p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-500 ${className}`}>
+export const Card: React.FC<React.HTMLAttributes<HTMLDivElement> & { children: React.ReactNode; className?: string }> = ({ children, className = '', ...props }) => (
+  <div className={`bg-white p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-500 ${className}`} {...props}>
     {children}
   </div>
 );

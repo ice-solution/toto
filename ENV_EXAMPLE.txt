@@ -1,0 +1,30 @@
+# ============================================
+# Frontend Configuration (Vite)
+# ============================================
+# 前端開發服務器端口（只填數字，不要包含 http://）
+VITE_FRONTEND_PORT=3001
+# 前端開發服務器主機（只填主機名或 IP，不要包含協議或端口）
+# 例如：0.0.0.0 或 localhost
+VITE_FRONTEND_HOST=0.0.0.0
+
+# ============================================
+# Backend API Configuration
+# ============================================
+# 後端 API 服務器端口（只填數字）
+API_PORT=3002
+# 後端 API 服務器主機（只填主機名，如 localhost，不要包含 http:// 或端口）
+API_HOST=localhost
+# 後端 API 完整 URL（包含協議和端口，用於前端連接）
+API_BASE_URL=http://localhost:3002
+
+# ============================================
+# Admin Login Credentials
+# ============================================
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=admin123
+
+# ============================================
+# Gemini API Key
+# ============================================
+GEMINI_API_KEY=your_gemini_api_key_here
+
