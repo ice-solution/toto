@@ -23,6 +23,11 @@ HOST = HOST.split(':')[0];
 app.use(cors());
 app.use(express.json());
 
+// 提供靜態文件服務 - 提供 public/images 目錄的圖片
+// 這樣無論開發還是生產環境，上傳的圖片都可以通過 /images/ 路徑訪問
+const imagesDir = path.join(__dirname, '../public/images');
+app.use('/images', express.static(imagesDir));
+
 // 配置 multer 用於文件上傳
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
