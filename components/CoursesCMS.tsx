@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Card } from './UIComponents';
 import { Plus, Edit, Trash, Save, X } from 'lucide-react';
 import { CourseItem } from '../types';
+import ImageUpload from './ImageUpload';
 
 interface CoursesCMSProps {
   courses: CourseItem[];
@@ -160,17 +161,12 @@ const CoursesCMS: React.FC<CoursesCMSProps> = ({ courses, onSave, onDelete }) =>
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-2">圖片 URL</label>
-                <input
-                  type="text"
-                  value={formData.imageUrl}
-                  onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded"
-                  placeholder="輸入圖片 URL"
-                />
-              </div>
+            <div className="grid grid-cols-1 gap-4">
+              <ImageUpload
+                value={formData.imageUrl}
+                onChange={(url) => setFormData({ ...formData, imageUrl: url })}
+                type="course"
+              />
 
               <div>
                 <label className="block text-sm font-medium mb-2">Instagram URL</label>
@@ -178,7 +174,7 @@ const CoursesCMS: React.FC<CoursesCMSProps> = ({ courses, onSave, onDelete }) =>
                   type="text"
                   value={formData.instagramUrl}
                   onChange={(e) => setFormData({ ...formData, instagramUrl: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded"
+                  className="w-full px-4 py-2 border-2 border-greenLight rounded focus:outline-none focus:border-accent"
                   placeholder="輸入 Instagram URL"
                 />
               </div>

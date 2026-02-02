@@ -4,6 +4,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
+import multer from 'multer';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,6 +22,47 @@ HOST = HOST.split(':')[0];
 // 啟用 CORS 和 JSON 解析
 app.use(cors());
 app.use(express.json());
+
+// 配置 multer 用於文件上傳
+const storage = multer.diskStorage({
+  destination: async (req, file, cb) => {
+    const uploadDir = path.join(__dirname, '../public/images');
+    try {
+      await fs.mkdir(uploadDir, { recursive: true });
+      cb(null, uploadDir);
+    } catch (error) {
+      cb(error, null);
+    }
+  },
+  filename: (req, file, cb) => {
+    // 生成唯一文件名：類型-時間戳-原始文件名
+    const type = req.body.type || 'general'; // service, course, 或 general
+    const timestamp = Date.now();
+    const ext = path.extname(file.originalname);
+    const name = path.basename(file.originalname, ext).replace(/[^a-zA-Z0-9]/g, '-');
+    const filename = `${type}-${timestamp}-${name}${ext}`;
+    cb(null, filename);
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024 // 10MB 限制
+  },
+  fileFilter: (req, file, cb) => {
+    // 只允許圖片文件
+    const allowedTypes = /jpeg|jpg|png|gif|webp/;
+    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = allowedTypes.test(file.mimetype);
+    
+    if (extname && mimetype) {
+      cb(null, true);
+    } else {
+      cb(new Error('只允許上傳圖片文件 (JPEG, JPG, PNG, GIF, WEBP)'));
+    }
+  }
+});
 
 // 獲取 JSON 文件路徑
 const getFilePath = (filename) => {
@@ -183,6 +225,55 @@ app.post('/memberships', async (req, res) => {
   } catch (error) {
     console.error('Error saving memberships.json:', error);
     res.status(500).json({ error: 'Failed to save memberships data' });
+  }
+});
+
+// 圖片上傳端點
+app.post('/upload-image', upload.single('image'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: '沒有上傳文件' });
+    }
+
+    // 返回圖片 URL（相對於 public 目錄）
+    const imageUrl = `/images/${req.file.filename}`;
+    
+    res.json({
+      success: true,
+      imageUrl: imageUrl,
+      filename: req.file.filename,
+      message: '圖片上傳成功'
+    });
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    res.status(500).json({ error: '圖片上傳失敗: ' + error.message });
+  }
+});
+
+// 刪除圖片端點
+app.delete('/delete-image/:filename', async (req, res) => {
+  try {
+    const filename = req.params.filename;
+    const imagePath = path.join(__dirname, '../public/images', filename);
+    
+    // 安全檢查：確保文件名不包含路徑遍歷字符
+    if (filename.includes('..') || filename.includes('/') || filename.includes('\\')) {
+      return res.status(400).json({ error: '無效的文件名' });
+    }
+
+    try {
+      await fs.unlink(imagePath);
+      res.json({ success: true, message: '圖片刪除成功' });
+    } catch (error) {
+      if (error.code === 'ENOENT') {
+        res.status(404).json({ error: '圖片不存在' });
+      } else {
+        throw error;
+      }
+    }
+  } catch (error) {
+    console.error('Error deleting image:', error);
+    res.status(500).json({ error: '圖片刪除失敗: ' + error.message });
   }
 });
 

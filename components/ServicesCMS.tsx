@@ -3,6 +3,7 @@ import { Button, Card } from './UIComponents';
 import { Plus, Edit, Trash, Save, X, Tag as TagIcon, Folder } from 'lucide-react';
 import { ServiceItem } from '../types';
 import { getServices, saveService, deleteService } from '../utils/servicesStorage';
+import ImageUpload from './ImageUpload';
 
 interface ServicesCMSProps {
   services: ServiceItem[];
@@ -281,17 +282,12 @@ const ServicesCMS: React.FC<ServicesCMSProps> = ({ services, onSave, onDelete })
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-2">圖片 URL</label>
-                <input
-                  type="text"
-                  value={formData.imageUrl}
-                  onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded"
-                  placeholder="輸入圖片 URL"
-                />
-              </div>
+            <div className="grid grid-cols-1 gap-4">
+              <ImageUpload
+                value={formData.imageUrl}
+                onChange={(url) => setFormData({ ...formData, imageUrl: url })}
+                type="service"
+              />
 
               <div>
                 <label className="block text-sm font-medium mb-2">Instagram URL</label>
@@ -299,7 +295,7 @@ const ServicesCMS: React.FC<ServicesCMSProps> = ({ services, onSave, onDelete })
                   type="text"
                   value={formData.instagramUrl}
                   onChange={(e) => setFormData({ ...formData, instagramUrl: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded"
+                  className="w-full px-4 py-2 border-2 border-greenLight rounded focus:outline-none focus:border-accent"
                   placeholder="輸入 Instagram URL"
                 />
               </div>
