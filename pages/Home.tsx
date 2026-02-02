@@ -93,7 +93,7 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {SERVICES.slice(0, 3).map(service => (
               <Card key={service.id} className="group cursor-pointer h-full flex flex-col">
-                <div className="overflow-hidden mb-6 h-64">
+                <div className="overflow-hidden mb-6 aspect-square">
                   <img 
                     src={service.imageUrl} 
                     alt={service.name} 

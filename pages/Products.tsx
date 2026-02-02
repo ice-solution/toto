@@ -13,6 +13,7 @@ import {
   getProductPrice,
   getSubcategoryForItem,
   getInstagramUrl,
+  getProductImageUrl,
   ProductItem,
   ProductsData
 } from '../utils/productsData';
@@ -132,9 +133,28 @@ const Products = () => {
                   onClick={handleItemClick}
                 >
                     <div className="relative overflow-hidden aspect-square bg-gray-50">
-                      <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                        <Sparkles className="w-16 h-16 text-gray-300" />
-                      </div>
+                      {getProductImageUrl(item) ? (
+                        <img 
+                          src={getProductImageUrl(item)} 
+                          alt={productName}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            const parent = target.parentElement;
+                            if (parent) {
+                              parent.classList.add('bg-gradient-to-br', 'from-gray-100', 'to-gray-200', 'flex', 'items-center', 'justify-center');
+                              const sparkles = document.createElement('div');
+                              sparkles.innerHTML = '<svg class="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>';
+                              parent.appendChild(sparkles);
+                            }
+                          }}
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                          <Sparkles className="w-16 h-16 text-gray-300" />
+                        </div>
+                      )}
                       {itemSubcategory && (
                         <div className="absolute top-2 left-2 bg-white/90 backdrop-blur px-2 py-1 text-[10px] uppercase tracking-widest">
                           {itemSubcategory}
@@ -208,6 +228,7 @@ const Products = () => {
               ? getSubcategoryForItem(productsData, categoryName, selectedItem) || ''
               : selectedSubcategory}
             instagramUrl={getInstagramUrl(selectedItem)}
+            imageUrl={getProductImageUrl(selectedItem)}
           />
         )}
       </div>

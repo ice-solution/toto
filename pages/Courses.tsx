@@ -32,7 +32,7 @@ const Courses = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {courses.map(course => (
             <div key={course.id} className="bg-white flex flex-col md:flex-row overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-100 group">
-              <div className="w-full md:w-2/5 h-64 md:h-auto overflow-hidden relative">
+              <div className="w-full md:w-2/5 aspect-square overflow-hidden relative">
                 <img 
                   src={course.imageUrl} 
                   alt={course.name} 

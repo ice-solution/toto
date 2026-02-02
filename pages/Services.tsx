@@ -45,6 +45,7 @@ const Services = () => {
       紅兒價錢: typeof service.price === 'number' ? service.price : (typeof service.price === 'string' ? service.price : 0),
       儀式內容: service.description,
       "Instagram 網址": service.instagramUrl,
+      圖片網址: service.imageUrl, // 添加圖片 URL
     };
   };
 
@@ -106,7 +107,7 @@ const Services = () => {
                   className="flex flex-col h-full group cursor-pointer"
                   onClick={() => handleServiceClick(service)}
                 >
-                  <div className="relative overflow-hidden mb-6 h-64 bg-gray-50">
+                  <div className="relative overflow-hidden mb-6 aspect-square bg-gray-50">
                     <img 
                       src={service.imageUrl} 
                       alt={service.name}
@@ -199,6 +200,7 @@ const Services = () => {
             type="service"
             subcategory={selectedService.category}
             instagramUrl={selectedService.instagramUrl}
+            imageUrl={selectedService.imageUrl}
           />
         )}
       </div>

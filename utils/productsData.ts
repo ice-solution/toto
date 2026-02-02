@@ -19,6 +19,7 @@ export interface ProductItem {
   必修修件?: string;
   修讀條件?: string;
   "Instagram 網址"?: string;
+  圖片網址?: string; // 圖片 URL
 }
 
 export interface ProductsData {
@@ -156,6 +157,11 @@ export const getProductPrice = (item: ProductItem): number => {
 // 獲取 Instagram URL
 export const getInstagramUrl = (item: ProductItem): string | undefined => {
   return item["Instagram 網址"];
+};
+
+// 獲取產品圖片 URL
+export const getProductImageUrl = (item: ProductItem): string | undefined => {
+  return item.圖片網址;
 };
 
 // 查找產品所屬的子分類
