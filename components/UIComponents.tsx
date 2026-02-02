@@ -8,9 +8,9 @@ export const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { 
 }) => {
   const baseStyles = "px-6 py-3 transition-all duration-300 tracking-widest text-sm font-medium uppercase";
   const variants = {
-    primary: "bg-black text-white hover:bg-gray-800",
-    outline: "border border-black text-black hover:bg-black hover:text-white",
-    ghost: "text-gray-600 hover:text-black hover:bg-gray-100"
+    primary: "bg-accent text-white hover:bg-greenApple",
+    outline: "border-2 border-accent text-accent hover:bg-accent hover:text-white",
+    ghost: "text-secondary hover:text-accent hover:bg-greenLight"
   };
 
   return (
@@ -34,7 +34,7 @@ export const SectionTitle: React.FC<{ title: string; subtitle?: string }> = ({ t
 );
 
 export const Card: React.FC<React.HTMLAttributes<HTMLDivElement> & { children: React.ReactNode; className?: string }> = ({ children, className = '', ...props }) => (
-  <div className={`bg-white p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-500 ${className}`} {...props}>
+  <div className={`bg-white p-8 border-2 border-greenLight shadow-sm hover:shadow-md hover:border-accent transition-all duration-500 ${className}`} {...props}>
     {children}
   </div>
 );

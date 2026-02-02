@@ -20,11 +20,11 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="fixed w-full z-50 bg-white shadow-sm py-4 transition-all duration-300">
+    <nav className="fixed w-full z-50 bg-white shadow-sm py-4 transition-all duration-300 border-b border-greenLight">
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="text-2xl font-serif tracking-widest font-bold z-50 text-black">
-          杜乾彰<span className="text-xs block font-sans font-normal tracking-[0.3em]">MASTER DU</span>
+        <Link to="/" className="text-2xl font-serif tracking-widest font-bold z-50 text-primary">
+          杜乾彰<span className="text-xs block font-sans font-normal tracking-[0.3em] text-accent">MASTER DU</span>
         </Link>
 
         {/* Desktop Menu */}
@@ -33,7 +33,7 @@ const Navbar = () => {
             <Link 
               key={link.path}
               to={link.path} 
-              className={`text-xs xl:text-sm tracking-widest uppercase text-black hover:text-accent transition-colors ${location.pathname === link.path ? 'border-b border-black' : ''}`}
+              className={`text-xs xl:text-sm tracking-widest uppercase text-primary hover:text-accent transition-colors ${location.pathname === link.path ? 'border-b-2 border-accent' : ''}`}
             >
               {link.label}
             </Link>
@@ -43,16 +43,16 @@ const Navbar = () => {
         {/* Icons */}
         <div className="flex items-center space-x-6 z-50">
           <button onClick={toggleCart} className="relative group">
-            <ShoppingBag className="w-5 h-5 text-black" />
+            <ShoppingBag className="w-5 h-5 text-primary" />
             {cart.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-black text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+              <span className="absolute -top-2 -right-2 bg-accent text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
                 {cart.length}
               </span>
             )}
           </button>
           
           <button className="lg:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <X className="w-6 h-6 text-black" /> : <Menu className="w-6 h-6 text-black" />}
+            {isMobileMenuOpen ? <X className="w-6 h-6 text-primary" /> : <Menu className="w-6 h-6 text-primary" />}
           </button>
         </div>
       </div>
@@ -65,7 +65,7 @@ const Navbar = () => {
               key={link.path}
               to={link.path} 
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-lg font-serif tracking-widest"
+              className="text-lg font-serif tracking-widest text-primary hover:text-accent"
             >
               {link.label}
             </Link>
