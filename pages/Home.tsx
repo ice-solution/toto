@@ -93,7 +93,7 @@ const Home = () => {
                 <img 
                   src={toto2}
                   alt="Master Du"
-                  className="w-full h-[600px] object-contain grayscale"
+                  className="w-full h-[600px] object-contain"
                 />
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-accent opacity-50"></div>
               </div>
