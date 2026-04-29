@@ -33,11 +33,18 @@ const CartDrawer = () => {
     if (cart.length === 0) return;
     
     // Construct WhatsApp Message
-    const itemsList = cart.map(item => `- ${item.name} (${item.type === 'product' ? '靈物' : '服務'}) x${item.quantity} ($${item.price * item.quantity})`).join('%0A');
+    const itemsList = cart.map(item => `- ${item.name} (${item.type === 'product' ? '靈物' : '服務'}) x${item.quantity} (HK$${item.price * item.quantity})`).join('\n');
     const total = getCartTotal();
-    const text = `你好，我想預約/購買以下項目：%0A%0A${itemsList}%0A%0A總計: HK$${total}%0A%0A請協助安排付款及送貨/預約詳情。`;
+    const text = `你好，我想預約/購買以下項目：\n\n${itemsList}\n\n總計: HK$${total}\n\n請協助安排付款及送貨/預約詳情。`;
+
+    const rawPhone = import.meta.env.VITE_WHATSAPP_PHONE as string | undefined;
+    const phone = rawPhone ? rawPhone.replace(/^\+/, '') : '';
+    if (!phone) {
+      console.warn('Missing VITE_WHATSAPP_PHONE in env');
+      return;
+    }
     
-    window.open(`https://wa.me/85212345678?text=${text}`, '_blank');
+    window.open(`https://wa.me/${encodeURIComponent(phone)}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
   };
 
   return (
