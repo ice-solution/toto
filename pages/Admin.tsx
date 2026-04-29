@@ -6,6 +6,7 @@ import BlogCMS from '../components/BlogCMS';
 import ServicesCMS from '../components/ServicesCMS';
 import CoursesCMS from '../components/CoursesCMS';
 import MembershipCMS from '../components/MembershipCMS';
+import HomepageSettingsCMS from '../components/HomepageSettingsCMS';
 import AdminLogin from '../components/AdminLogin';
 import { BlogPost, ServiceItem, CourseItem, MembershipApplication } from '../types';
 import { getBlogPosts, saveBlogPost, deleteBlogPost } from '../utils/blogStorage';
@@ -86,6 +87,9 @@ const Admin = () => {
       loadCourses();
     } else if (activeTab === 'memberships') {
       loadMemberships();
+    } else if (activeTab === 'homepage') {
+      // 載入服務列表（用於選擇精選服務）
+      loadServices();
     }
   }, [activeTab, isAuthenticated]);
 
@@ -176,6 +180,12 @@ const Admin = () => {
             />
           </div>
         );
+      case 'homepage':
+        return (
+          <div className="bg-white p-6 shadow-sm border border-gray-100">
+            <HomepageSettingsCMS services={services} />
+          </div>
+        );
       default:
         return <div className="p-12 text-center text-gray-500">Feature coming soon...</div>;
     }
@@ -222,6 +232,12 @@ const Admin = () => {
             className={`w-full text-left p-3 rounded flex items-center gap-3 hover:bg-gray-900 ${activeTab === 'products' ? 'bg-gray-800' : ''}`}
           >
             <ShoppingCart className="w-4 h-4" /> Products
+          </button>
+          <button 
+            onClick={() => setActiveTab('homepage')}
+            className={`w-full text-left p-3 rounded flex items-center gap-3 hover:bg-gray-900 ${activeTab === 'homepage' ? 'bg-gray-800' : ''}`}
+          >
+            <Settings className="w-4 h-4" /> 首頁設置
           </button>
           <button 
             onClick={() => setActiveTab('settings')}

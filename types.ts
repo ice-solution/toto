@@ -65,7 +65,7 @@ export interface UserProfile {
   tier: string;
 }
 
-export type MembershipStatus = 'pending' | 'paid' | 'cancelled' | 'expired';
+export type MembershipStatus = 'pending' | 'paid' | 'cancelled' | 'expired' | 'whatsapp_sent';
 
 export interface MembershipApplication {
   id: string;

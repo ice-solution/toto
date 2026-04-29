@@ -233,6 +233,40 @@ app.post('/memberships', async (req, res) => {
   }
 });
 
+// 讀取首頁設置
+app.get('/homepage-settings', async (req, res) => {
+  try {
+    const filePath = getFilePath('homepageSettings.json');
+    try {
+      const data = await fs.readFile(filePath, 'utf-8');
+      res.json(JSON.parse(data));
+    } catch (error) {
+      if (error.code === 'ENOENT') {
+        // 文件不存在，返回默認值
+        res.json({ featuredServiceIds: [] });
+      } else {
+        throw error;
+      }
+    }
+  } catch (error) {
+    console.error('Error reading homepageSettings.json:', error);
+    res.status(500).json({ error: 'Failed to read homepage settings' });
+  }
+});
+
+// 保存首頁設置
+app.post('/homepage-settings', async (req, res) => {
+  try {
+    const settings = req.body;
+    const filePath = getFilePath('homepageSettings.json');
+    await fs.writeFile(filePath, JSON.stringify(settings, null, 2), 'utf-8');
+    res.json({ success: true, message: 'Homepage settings saved successfully' });
+  } catch (error) {
+    console.error('Error saving homepageSettings.json:', error);
+    res.status(500).json({ error: 'Failed to save homepage settings' });
+  }
+});
+
 // 圖片上傳端點
 app.post('/upload-image', upload.single('image'), async (req, res) => {
   try {

@@ -1,10 +1,50 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SectionTitle, Button, Card } from '../components/UIComponents';
 import { ArrowRight, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { SERVICES, PROFILE_STATS } from '../data';
+import { PROFILE_STATS } from '../data';
+import { getServices } from '../utils/servicesStorage';
+import { getHomepageSettings } from '../utils/homepageSettingsStorage';
+import { ServiceItem } from '../types';
+import toto2 from '../about/toto_2.jpg';
 
 const Home = () => {
+  const [featuredServices, setFeaturedServices] = useState<ServiceItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadFeaturedServices = async () => {
+      try {
+        // 同時載入服務列表和首頁設置
+        const [services, settings] = await Promise.all([
+          getServices(),
+          getHomepageSettings()
+        ]);
+
+        // 根據設置中的 ID 列表過濾出精選服務
+        if (settings.featuredServiceIds && settings.featuredServiceIds.length > 0) {
+          const featured = services.filter(service => 
+            settings.featuredServiceIds.includes(service.id)
+          );
+          // 按照設置中的順序排序
+          const sorted = settings.featuredServiceIds
+            .map(id => featured.find(s => s.id === id))
+            .filter(Boolean) as ServiceItem[];
+          setFeaturedServices(sorted);
+        } else {
+          // 如果沒有設置，顯示前3個服務（向後兼容）
+          setFeaturedServices(services.slice(0, 3));
+        }
+      } catch (error) {
+        console.error('Error loading featured services:', error);
+        setFeaturedServices([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadFeaturedServices();
+  }, []);
   return (
     <div className="animate-fade-in">
       {/* Hero Section */}
@@ -51,9 +91,9 @@ const Home = () => {
               <div className="relative">
                 <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-accent opacity-50"></div>
                 <img 
-                  src="https://picsum.photos/id/1005/600/800" 
-                  alt="Master Du" 
-                  className="w-full h-[600px] object-cover grayscale"
+                  src={toto2}
+                  alt="Master Du"
+                  className="w-full h-[600px] object-contain grayscale"
                 />
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-accent opacity-50"></div>
               </div>
@@ -90,31 +130,58 @@ const Home = () => {
         <div className="container mx-auto px-6">
           <SectionTitle title="精選玄學服務" subtitle="Sacred Services" />
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {SERVICES.slice(0, 3).map(service => (
-              <Card key={service.id} className="group cursor-pointer h-full flex flex-col">
-                <div className="overflow-hidden mb-6 aspect-square">
-                  <img 
-                    src={service.imageUrl} 
-                    alt={service.name} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                </div>
-                <h3 className="text-xl font-serif mb-2 text-primary group-hover:text-accent transition-colors">{service.name}</h3>
-                <p className="text-secondary/80 text-sm mb-4 flex-grow line-clamp-3">{service.description}</p>
-                <div className="flex justify-between items-center pt-4 border-t border-greenLight">
-                  <span className="text-lg font-medium text-accent">HK${service.price.toLocaleString()}</span>
-                  <span className="text-xs text-secondary/60 uppercase tracking-wider">了解詳情</span>
-                </div>
-              </Card>
-            ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link to="/services">
-              <Button variant="outline">查看所有服務</Button>
-            </Link>
-          </div>
+          {isLoading ? (
+            <div className="text-center py-16 text-secondary/60">
+              <p className="text-lg mb-2">載入中...</p>
+            </div>
+          ) : featuredServices.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {featuredServices.map(service => (
+                  <Link key={service.id} to={`/services#${service.id}`}>
+                    <Card className="group cursor-pointer h-full flex flex-col hover:shadow-lg transition-shadow">
+                      <div className="overflow-hidden mb-6 aspect-square">
+                        <img 
+                          src={service.imageUrl} 
+                          alt={service.name} 
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            const parent = target.parentElement;
+                            if (parent) {
+                              parent.classList.add('bg-gradient-to-br', 'from-gray-100', 'to-gray-200');
+                            }
+                          }}
+                        />
+                      </div>
+                      <h3 className="text-xl font-serif mb-2 text-primary group-hover:text-accent transition-colors">{service.name}</h3>
+                      <p className="text-secondary/80 text-sm mb-4 flex-grow line-clamp-3">{service.description}</p>
+                      <div className="flex justify-between items-center pt-4 border-t border-greenLight">
+                        <span className="text-lg font-medium text-accent">
+                          {typeof service.price === 'number' 
+                            ? `HK$${service.price.toLocaleString()}` 
+                            : `HK$${service.price}`}
+                        </span>
+                        <span className="text-xs text-secondary/60 uppercase tracking-wider">了解詳情</span>
+                      </div>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+              
+              <div className="text-center mt-12">
+                <Link to="/services">
+                  <Button variant="outline">查看所有服務</Button>
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-16 text-secondary/60">
+              <p className="text-lg mb-2">暫無精選服務</p>
+              <p className="text-sm">請在後台設置精選服務</p>
+            </div>
+          )}
         </div>
       </section>
 

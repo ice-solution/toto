@@ -44,7 +44,7 @@ const Membership = () => {
         dob: formData.dob,
         time: formData.time || undefined,
         tier: formData.tier,
-        status: 'pending',
+        status: 'whatsapp_sent',
         createdAt: now,
         updatedAt: now,
       };
@@ -55,6 +55,24 @@ const Membership = () => {
         alert('保存會員申請失敗，請稍後再試');
         setIsSubmitting(false);
         return;
+      }
+
+      // 送出 WhatsApp 訊息（使用使用者點擊觸發，避免瀏覽器擋截）
+      const whatsAppPhone = import.meta.env.VITE_WHATSAPP_PHONE as string | undefined;
+      if (whatsAppPhone) {
+        const priceText = `HK${Number(selectedTier.price).toLocaleString()}`;
+        const message =
+          `你好 我希望參加 ${selectedTier.name} ${priceText}\n` +
+          `以下是我的資料:\n` +
+          `form name, ${formData.name},\n` +
+          `phone, ${formData.phone},\n` +
+          `email, ${formData.email},\n` +
+          `出生日期, ${formData.dob},\n` +
+          `出生時間, ${formData.time || ''}`; // 出生時間（選填）
+        const url = `https://api.whatsapp.com/send/?phone=${encodeURIComponent(whatsAppPhone)}&text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank', 'noopener,noreferrer');
+      } else {
+        console.warn('Missing VITE_WHATSAPP_PHONE in env');
       }
       
       // 導航到付款頁面，傳遞會員申請 ID

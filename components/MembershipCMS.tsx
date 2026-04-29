@@ -55,6 +55,8 @@ const MembershipCMS: React.FC<MembershipCMSProps> = ({ memberships, onSave, onDe
     switch (status) {
       case 'pending':
         return 'bg-yellow-100 text-yellow-800';
+      case 'whatsapp_sent':
+        return 'bg-blue-100 text-blue-800';
       case 'paid':
         return 'bg-green-100 text-green-800';
       case 'cancelled':
@@ -70,6 +72,8 @@ const MembershipCMS: React.FC<MembershipCMSProps> = ({ memberships, onSave, onDe
     switch (status) {
       case 'pending':
         return '待付款';
+      case 'whatsapp_sent':
+        return '已WhatsApp通知';
       case 'paid':
         return '已付款';
       case 'cancelled':
@@ -172,6 +176,7 @@ const MembershipCMS: React.FC<MembershipCMSProps> = ({ memberships, onSave, onDe
                   required
                 >
                   <option value="pending">待付款</option>
+                  <option value="whatsapp_sent">已WhatsApp通知</option>
                   <option value="paid">已付款</option>
                   <option value="cancelled">已取消</option>
                   <option value="expired">已過期</option>

@@ -1,8 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SectionTitle } from '../components/UIComponents';
 import { CERTIFICATIONS } from '../data';
+import toto1 from '../about/toto_1.jpg';
+import toto2 from '../about/toto_2.jpg';
+import toto3 from '../about/toto_3.jpg';
+import toto4 from '../about/toto_4.jpg';
+import toto5 from '../about/toto_5.jpg';
+
+const ABOUT_MAIN_PHOTO = { src: toto5, alt: '杜乾彰師傅' };
+// `toto_2` 已用在 homepage 的 about 區塊；此頁只展示其他未使用的照片。
+const ABOUT_GALLERY_PHOTOS = [
+  { src: toto1, alt: '杜乾彰師傅' },
+  { src: toto3, alt: '杜乾彰師傅' },
+  { src: toto4, alt: '杜乾彰師傅' },
+];
 
 const About = () => {
+  const [activePhotoSrc, setActivePhotoSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!activePhotoSrc) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActivePhotoSrc(null);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [activePhotoSrc]);
+
   return (
     <div className="pt-32 pb-24 animate-fade-in">
       <div className="container mx-auto px-6">
@@ -11,7 +35,18 @@ const About = () => {
         {/* Intro Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-24">
            <div>
-             <img src="https://picsum.photos/id/1011/800/1000" alt="Master Ritual" className="w-full h-auto grayscale rounded-sm shadow-xl" />
+             <button
+               type="button"
+               className="block w-full"
+               onClick={() => setActivePhotoSrc(ABOUT_MAIN_PHOTO.src)}
+               aria-label="放大主圖片"
+             >
+               <img
+                 src={ABOUT_MAIN_PHOTO.src}
+                 alt={ABOUT_MAIN_PHOTO.alt}
+                 className="w-full h-auto rounded-sm shadow-xl"
+               />
+             </button>
            </div>
            <div className="flex flex-col justify-center">
              <h3 className="text-2xl font-serif mb-6">傳承與創新的結合</h3>
@@ -31,6 +66,29 @@ const About = () => {
                </ul>
              </div>
            </div>
+        </div>
+
+        {/* Photo Gallery - other unused photos */}
+        <div className="mb-24">
+          <h3 className="text-2xl font-serif mb-8 text-center">相片集</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {ABOUT_GALLERY_PHOTOS.map((photo, idx) => (
+              <button
+                key={idx}
+                type="button"
+                className="overflow-hidden rounded-sm shadow-lg hover:shadow-xl transition-shadow text-left relative p-0 border-0 bg-transparent"
+                onClick={() => setActivePhotoSrc(photo.src)}
+                aria-label="放大相片"
+                style={{ aspectRatio: '4 / 3' }}
+              >
+                <img
+                  src={photo.src}
+                  alt={`${photo.alt} ${idx + 1}`}
+                  className="absolute inset-0 w-full h-full object-cover object-[50%_30%] transition-all duration-300"
+                />
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Credentials Grid */}
@@ -80,6 +138,35 @@ const About = () => {
           </div>
         </div>
       </div>
+
+      {/* Image Modal */}
+      {activePhotoSrc && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-6"
+          onClick={() => setActivePhotoSrc(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="relative w-full max-w-4xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="absolute -top-10 right-0 text-white/90 hover:text-white"
+              onClick={() => setActivePhotoSrc(null)}
+              aria-label="關閉放大視窗"
+            >
+              關閉
+            </button>
+            <img
+              src={activePhotoSrc}
+              alt="放大圖片"
+              className="w-full max-h-[80vh] object-contain rounded-sm shadow-2xl bg-black"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
